@@ -1,2 +1,3 @@
-# nuxt3-boilerplate
-Nuxt 3 + Typescript + Tailwind
+# Nuxt 3 Boilerplate
+
+## TypeScript | Tailwind | Nuxt modules
