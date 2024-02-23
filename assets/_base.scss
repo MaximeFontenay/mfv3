@@ -1,0 +1,130 @@
+@use "variables" as *;
+
+*,
+::after,
+::before {
+  margin: 0;
+  padding: 0;
+  // user-select: none;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+  
+  :has(:target) {
+    scroll-behavior: smooth;
+    scroll-padding-top: 3rem;
+  }
+}
+
+*::selection {
+  background: rgba(122, 248, 234, 0.15);
+  color: $primary;
+}
+
+html {
+  color-scheme: dark light;
+  hanging-punctuation: first last;
+  overflow-x: clip;
+  scrollbar-gutter: stable;
+}
+
+body {
+  @include font();
+  color: $light;
+  background-color: $dark;
+  min-height: 100svh;
+  text-wrap: pretty;
+  font-smooth: always;
+  position: relative;
+  overflow-x: clip;
+  -webkit-font-smoothing: subpixel-antialiased;
+  -webkit-text-size-adjust: 100%;
+  -webkit-touch-callout: none;
+  @include scrollbar(3px, $primary);
+  @include is-firefox {
+    -moz-osx-font-smoothing: grayscale;
+    scrollbar-width: thin;
+  }
+}
+
+img {
+  object-fit: contain;
+  pointer-events: none;
+  font-style: italic;
+  background-repeat: no-repeat;
+  background-size: cover;
+  shape-margin: 1rem;
+  image-resolution: from-image 300dpi;
+  @include is-firefox {
+    image-rendering: optimizequality;
+  }
+}
+
+svg {
+  max-height: 100%;
+  @include is-firefox {
+    image-rendering: optimizequality;
+  }
+}
+
+ul,
+ol,
+li {
+  max-width: 100%;
+  list-style: none;
+}
+
+// Reset
+:where(p, h1, h2, h3, h4, h5, h6, ul, ol, li) {
+  overflow-wrap: break-word;
+}
+
+:where(input, button, textarea, select) {
+  color: inherit;
+  outline: none;
+  background-color: $t;
+  border: none;
+}
+
+:where(details, button) {
+  cursor: pointer;
+}
+
+:where(textarea) {
+  resize: vertical;
+
+  &::-webkit-resizer {
+    background: $t;
+  }
+}
+
+:where(img, picture, svg, video, canvas, audio, iframe, embed, object) {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+:where(a) {
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+
+// Classes 
+.font-1 {
+  @include font();
+}
+.font-2 {
+  @include font($font2);
+}

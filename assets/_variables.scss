@@ -1,0 +1,221 @@
+//! ///////////////
+//! // Variables // 
+//! ///////////////
+
+//? Colors 
+:root {
+  --light: #F6F6F6;
+  --dark: #070707;
+  --primary: #F4F83C;
+}
+
+$t: transparent;
+$light:  var(--light);
+$dark:  var(--dark);
+
+$primary: #F4F83C;
+$primary30: #919405;
+$primary10: #303102;
+
+//? Sizes
+$s1 : 4px;
+$s2 : 8px;
+$s3 : 12px;
+$s4 : 16px;
+$s5 : 20px;
+$s6 : 24px;
+$s7 : 28px;
+$s8 : 32px;
+$s9 : 36px;
+$s10 : 40px;
+$s11 : 44px;
+$s12 : 48px;
+$s13 : 52px;
+$s14 : 56px;
+$s15 : 60px;
+$s16 : 64px;
+$s17 : 68px;
+$s18 : 72px;
+$s19 : 76px;
+$s20 : 80px;
+$s21 : 84px;
+$s22 : 88px;
+$s23 : 92px;
+$s24 : 96px;
+$s25 : 100px;
+
+
+//! ///////////
+//! // Fonts // 
+//! ///////////
+
+// .ttf format('TrueType') | .otf format('OpenType') | .woff format('woff') | .woff2 format('woff2')
+$font: 'kenoky';
+$fontFormat: 'ttf';
+
+@if $font != 'FontName' {
+    @font-face {
+        font-family: $font;
+        src: url("/fonts/#{$font}.#{$fontFormat}") format("#{$fontFormat}");
+        font-weight: 100 900;
+        font-variation-settings: 'wght' 400;
+        font-style: normal;
+        font-display: swap;
+    }
+} 
+
+
+$font2: 'durer';
+$fontFormat2: 'woff2';
+
+@font-face {
+    font-family: $font2;
+    src: url("/fonts/#{$font2}.#{$fontFormat2}") format("#{$fontFormat2}");
+    font-weight: 100 900;
+    font-variation-settings: 'wght' 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+//! ////////////
+//! // Mixins // 
+//! ////////////
+
+//? Variables 
+@mixin color($color: $primary, $alpha: 1, $property: color){
+    #{$property}: rgba($color, $alpha)
+}
+
+@mixin fz($i) {
+    @if $i >= 1 and $i < 2 {
+        font-size: clamp(calc(#{$i} * 13px), calc(#{$i} * .5vw), calc(#{$i} * 50px))
+    }
+    @if $i >= 2 and $i < 3 {
+        font-size: clamp(calc(#{$i} * 8px), calc(#{$i} * .6vw), calc(#{$i} * 30px))
+    }
+    @if $i >= 3 and $i < 4 {
+        font-size: clamp(calc(#{$i} * 6px), calc(#{$i} * .7vw), calc(#{$i} * 25px))
+    }
+    @if $i >= 4 {
+        font-size: clamp(calc(#{$i} * 7px), calc(#{$i} * .8vw), calc(#{$i} * 22px))
+    }
+}
+
+@mixin font($font: $font) {
+    font-family: $font, system-ui, -apple-system, sans-serif;
+}
+
+//? Positioning
+@mixin flex($justify: center, $align: center, $gap: 0, $direction: row, $wrap: nowrap) {
+    @if $justify == 'between' {
+        justify-content: space-between;
+    }
+    @else {
+        justify-content: $justify;
+    }
+    display: flex;
+    flex-direction: $direction;
+    align-items: $align;
+    flex-wrap: $wrap;
+    gap: $gap;
+}
+
+@mixin position($top: initial, $left: initial, $bottom: initial, $right: initial, $position: absolute) {
+    content: '';
+    position: $position;
+    top: $top;
+    right: $right;
+    bottom: $bottom;
+    left: $left;
+}
+
+//? Shortcut
+@mixin background($size: contain, $position: center, $repeat: no-repeat) {
+    background-size: $size;
+    background-position: $position;
+    background-repeat: $repeat;
+}
+
+@mixin fixed-size($width, $height: $width, $fit: cover) {
+    width: $width;
+    min-width: $width;
+    max-width: $width;
+    height: $height;
+    min-height: $height;
+    max-height: $height;
+    object-fit: $fit;
+}
+
+@mixin observer($animation, $animation-start-value, $animation-end-value, $transition: .5s, $delay: 0s, ) {
+    transition: $animation $transition $delay;
+    #{$animation}: $animation-start-value;
+    &.in-view {
+        #{$animation}: $animation-end-value;
+    }
+}
+
+@mixin scrollbar($width: 1.5px, $color: $primary, $track: $t) {
+    scrollbar-width: thin;
+    scrollbar-color: $color $t;
+
+    &::-webkit-scrollbar {
+        height: $width;
+        width: $width;
+        border-radius: 5px;
+        transition: .2s;
+    }
+    &::-webkit-scrollbar-track {
+        background: $track;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: $color;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    &::-webkit-scrollbar-thumb:hover {
+        @include color($color, .5,'background');
+    }
+}
+
+@mixin is-chrome {
+    @supports (-webkit-font-smoothing: subpixel-antialiased) {
+        @content;
+    }
+}
+
+@mixin is-firefox {
+    @-moz-document url-prefix() {
+        @content;
+    }
+}
+
+//? Responsive
+@mixin sm($minmax: min-width) {
+    @media screen and ($minmax: 480px) {
+        @content;
+    }
+}
+
+@mixin md($minmax: min-width) {
+    @media screen and ($minmax: 768px) {
+        @content;
+    }
+}
+
+@mixin lg($minmax: min-width) {
+    @media screen and ($minmax: 976px) {
+        @content;
+    }
+}
+
+@mixin xl($minmax: min-width) {
+    @media screen and ($minmax: 1200px) {
+        @content;
+    }
+}
+
+@mixin xxl($minmax: min-width) {
+    @media screen and ($minmax: 1400px) {
+        @content;
+    }
+}
